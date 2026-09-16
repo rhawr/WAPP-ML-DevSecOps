@@ -4,15 +4,14 @@
 Facultad de Ingeniería — Ingeniería de Sistemas  
 Materia: Mecanismos de Seguridad Informática  
 Profesor: Octavio J. Salcedo Parra  
-Entrega: 24 de septiembre de 2026
 
 ## Integrantes
 
 | Nombre | Correo |
 |---|---|
-| [Tu nombre completo] | d3vjhz@gmail.com |
-| [Nombre compañero 1] | [correo] |
-| [Nombre compañero 2] | [correo] |
+| Javier Alejandro Penagos Hernandez | 20221020028 |
+| Laura Daniela Muñoz Ipus | 20221020022 |
+| Jhonatan David Moreno Barragan | 20201020094 |
 
 ---
 
@@ -33,19 +32,37 @@ La aplicación objetivo es **OWASP Juice Shop**, desplegada en un entorno de lab
 
 ## Arquitectura
 
-```
-                        ┌─────────────────────────────────────────┐
-                        │              CAPA WAAP                  │
- Cliente / Atacante ──► │  Motor de reglas   │  Módulo IA/ML      │──► Aplicación objetivo
-  (curl, ZAP,           │  ModSecurity+CRS   │  Isolation Forest  │    (Juice Shop)
-   scripts)             │                    │                    │    + Agente RASP
-                        │  Orquestador de decisión (allow/block)  │
-                        └─────────────────────────────────────────┘
-                                        │
-                        ┌───────────────▼────────────────────────┐
-                        │       PIPELINE DEVSECOPS (CI/CD)       │
-                        │  Semgrep │ pip-audit │ Trivy │ Checkov  │
-                        └────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    Client(["Cliente / Atacante\ncurl · ZAP · scripts"])
+
+    subgraph WAAP ["CAPA WAAP — localhost:4000"]
+        direction LR
+        WAF["Motor de reglas\nModSecurity + OWASP CRS 3.3.10"]
+        ML["Módulo IA/ML\nIsolation Forest"]
+        Orq{{"Orquestador\nallow / block / alert"}}
+        WAF --> Orq
+        ML --> Orq
+    end
+
+    subgraph Target ["Aplicación objetivo — localhost:3000"]
+        JS["OWASP Juice Shop"]
+        RASP["Agente RASP\nmiddleware runtime"]
+        JS --> RASP
+    end
+
+    Logs[("Logging JSON\nObservabilidad")]
+
+    subgraph Pipeline ["PIPELINE DEVSECOPS — CI/CD"]
+        CI["Semgrep · pip-audit · Trivy · Checkov · ZAP"]
+    end
+
+    Client -->|"HTTP request"| WAAP
+    Orq -->|"permitido"| Target
+    Orq -->|"bloqueado 403"| Client
+    RASP --> Logs
+    Orq --> Logs
+    Pipeline -.->|"valida antes del despliegue"| WAAP
 ```
 
 Flujo de una petición:
