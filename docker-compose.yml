@@ -1,0 +1,19 @@
+# docker-compose.yml
+services:
+  juice-shop:
+    image: bkimminich/juice-shop
+    ports:
+      - "3000:3000"
+
+  waap-proxy:
+    image: owasp/modsecurity-crs:nginx-alpine
+    ports:
+      - "4000:8080"
+    environment:
+      - BACKEND=http://juice-shop:3000
+      - MODSEC_RULE_ENGINE=DetectionOnly
+      - PARANOIA=1
+      - ANOMALY_INBOUND=5
+      - ANOMALY_OUTBOUND=4
+    depends_on:
+      - juice-shop

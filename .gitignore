@@ -1,0 +1,35 @@
+# Archivos sensibles / personales
+CLAUDE.md
+*.pdf
+
+# Entornos virtuales Python
+traffic_agent/envTrafficAgent/
+**/env/
+**/.venv/
+**/venv/
+
+# Cache de Python
+**/__pycache__/
+**/*.py[cod]
+**/*.pyo
+
+# Datasets externos grandes (CSIC 2010, HTTP Params, etc.)
+traffic_agent/datasets/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Credenciales y configuración local
+.env
+.env.*
+secrets.*
+
+# Artefactos de IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs de sistema (no los del proyecto)
+*.log
