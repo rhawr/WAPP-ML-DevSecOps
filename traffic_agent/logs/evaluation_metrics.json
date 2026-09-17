@@ -1,16 +1,16 @@
 {
-  "evaluated_at": "2026-09-16T01:28:56.699124+00:00",
+  "evaluated_at": "2026-09-17T02:50:03.797780+00:00",
   "rows_evaluated": 500,
   "confusion_matrix": {
     "TN": 180,
     "FP": 20,
-    "FN": 50,
-    "TP": 250
+    "FN": 40,
+    "TP": 260
   },
-  "accuracy": 0.86,
-  "attack_precision": 0.925926,
-  "attack_recall_detection_rate": 0.833333,
-  "attack_f1": 0.877193,
+  "accuracy": 0.88,
+  "attack_precision": 0.928571,
+  "attack_recall_detection_rate": 0.866667,
+  "attack_f1": 0.896552,
   "normal_false_positive_rate": 0.1,
-  "roc_auc_anomaly_score": 0.921658
+  "roc_auc_anomaly_score": 0.952367
 }

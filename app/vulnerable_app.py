@@ -62,12 +62,14 @@ DB = _init_db()
 @rasp_guard_query
 def build_login_query(email: str, password: str) -> str:
     """Vulnerable string-concatenated query; RASP inspects the final result."""
+    # nosemgrep: waap-python-sql-string-building  (sink deliberadamente vulnerable, Fase 4)
     return f"SELECT email, role FROM users WHERE email = '{email}' AND password = '{password}'"
 
 
 @rasp_guard_query
 def build_search_query(term: str, extra: str) -> str:
     """Two independent query parameters concatenated into a single query."""
+    # nosemgrep: waap-python-sql-string-building  (sink deliberadamente vulnerable, Fase 4)
     return f"SELECT name FROM products WHERE name LIKE '%{term}{extra}%'"
 
 

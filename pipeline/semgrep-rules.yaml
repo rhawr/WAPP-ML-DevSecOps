@@ -1,0 +1,51 @@
+rules:
+  - id: waap-python-sql-string-building
+    languages: [python]
+    severity: ERROR
+    message: >-
+      Consulta SQL construida por concatenación/f-string/format (CWE-89, SQL
+      injection). Usa consultas parametrizadas. Si el sink es deliberadamente
+      vulnerable para el laboratorio, anótalo con "# nosemgrep: waap-python-sql-string-building".
+    metadata:
+      category: security
+      owasp: "A03:2021 - Injection"
+      cwe: "CWE-89"
+      confidence: HIGH
+    patterns:
+      - pattern-regex: (?i)(select|insert|update|delete)[^\n]*(\{[^}]+\}|["']\s*\+|\+\s*["']|%s|\.format\()
+
+  - id: waap-python-subprocess-shell
+    languages: [python]
+    severity: ERROR
+    message: "subprocess con shell=True permite inyección de comandos (CWE-78)."
+    metadata:
+      category: security
+      owasp: "A03:2021 - Injection"
+      cwe: "CWE-78"
+    patterns:
+      - pattern: subprocess.$FUNC(..., shell=True, ...)
+
+  - id: waap-python-unsafe-deserialization
+    languages: [python]
+    severity: ERROR
+    message: "Deserialización insegura con pickle sobre datos no confiables (CWE-502)."
+    metadata:
+      category: security
+      owasp: "A08:2021 - Software and Data Integrity Failures"
+      cwe: "CWE-502"
+    patterns:
+      - pattern-either:
+          - pattern: pickle.loads(...)
+          - pattern: pickle.load(...)
+
+  - id: waap-python-eval-exec
+    languages: [python]
+    severity: WARNING
+    message: "Uso de eval/exec sobre entrada dinámica (CWE-95)."
+    metadata:
+      category: security
+      cwe: "CWE-95"
+    patterns:
+      - pattern-either:
+          - pattern: eval(...)
+          - pattern: exec(...)

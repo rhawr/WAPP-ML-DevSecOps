@@ -1,0 +1,401 @@
+{
+  "generated_at": "2026-09-17T02:30:28.920716+00:00",
+  "proxy_url": "http://localhost:4000",
+  "proxy_online": true,
+  "rasp_url": "http://127.0.0.1:45225",
+  "ml_model_loaded": false,
+  "ml_error": "ModuleNotFoundError: No module named 'joblib'",
+  "sqlmap": null,
+  "cases": [
+    {
+      "id": "sqli_classic",
+      "technique": "SQLi clásico ' OR '1'='1",
+      "note": "",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 59.9312,
+          "body": "{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Apple Juice (1000ml)\",\"description\":\"The all-time classic.\",\"price\":1.99,\"deluxePrice\":0.99,\"image\":\"apple_juice.jpg\",\"createdAt\":\"2026-09-17 02:24:45.663 +00:00\",\"updatedAt\":\"2026-09-17 02:24:45.663 +00:00\",\"deletedAt\":null},{\"id\":24,\"name\":\"Apple Pomace\",\"description\":\"Finest pressings of apples. Allergy disclaimer: Might contain traces of worms. Can b"
+        },
+        "rasp": {
+          "status": "Sí",
+          "http_code": 403,
+          "response_time_ms": 3.3,
+          "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"sql_injection\",\"matched_rule\":\"string_tautology\"}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=%27+OR+%271%27%3D%271",
+        "body": "",
+        "params": {
+          "q": "' OR '1'='1"
+        }
+      }
+    },
+    {
+      "id": "sqli_url_encoded",
+      "technique": "SQLi con codificación URL",
+      "note": "",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 37.511,
+          "body": "{\"status\":\"success\",\"data\":[]}"
+        },
+        "rasp": {
+          "status": "Sí",
+          "http_code": 403,
+          "response_time_ms": 2.4898,
+          "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"sql_injection\",\"matched_rule\":\"string_tautology\"}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=%2527%2520OR%2520%25271%2527%253D%25271",
+        "body": "",
+        "params": {
+          "q": "%27%20OR%20%271%27%3D%271"
+        }
+      }
+    },
+    {
+      "id": "sqli_double_encoded",
+      "technique": "SQLi doble URL-encoding (evasión Fase 2)",
+      "note": "Técnica que evadió CRS en PL1",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 25.3602,
+          "body": "{\"status\":\"success\",\"data\":[]}"
+        },
+        "rasp": {
+          "status": "Sí",
+          "http_code": 403,
+          "response_time_ms": 2.6598,
+          "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"sql_injection\",\"matched_rule\":\"string_tautology\"}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=%252527%252520OR%252520%2525271%252527%25253D%2525271",
+        "body": "",
+        "params": {
+          "q": "%2527%2520OR%2520%25271%2527%253D%25271"
+        }
+      }
+    },
+    {
+      "id": "sqli_fragmented",
+      "technique": "SQLi fragmentado en 2 parámetros",
+      "note": "Cada parámetro es benigno por separado",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 18.9577,
+          "body": "{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Apple Juice (1000ml)\",\"description\":\"The all-time classic.\",\"price\":1.99,\"deluxePrice\":0.99,\"image\":\"apple_juice.jpg\",\"createdAt\":\"2026-09-17 02:24:45.663 +00:00\",\"updatedAt\":\"2026-09-17 02:24:45.663 +00:00\",\"deletedAt\":null},{\"id\":24,\"name\":\"Apple Pomace\",\"description\":\"Finest pressings of apples. Allergy disclaimer: Might contain traces of worms. Can b"
+        },
+        "rasp": {
+          "status": "Sí",
+          "http_code": 403,
+          "response_time_ms": 2.3002,
+          "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"sql_injection\",\"matched_rule\":\"numeric_tautology\"}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=%27+OR+1&extra=%3D1--",
+        "body": "",
+        "params": {
+          "q": "' OR 1",
+          "extra": "=1--"
+        }
+      }
+    },
+    {
+      "id": "sqli_comments",
+      "technique": "SQLi con comentarios en línea",
+      "note": "Intento de romper firmas basadas en cadenas exactas",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 500,
+          "response_time_ms": 27.3309,
+          "body": "<html>\n  <head>\n    <meta charset='utf-8'> \n    <title>Error: SQLITE_ERROR: incomplete input</title>\n    <style>* {\n  margin: 0;\n  padding: 0;\n  outline: 0;\n}\n\nbody {\n  padding: 80px 100px;\n  font: 13px \"Helvetica Neue\", \"Lucida Grande\", \"Arial\";\n  background: #ECE9E9 -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ECE9E9));\n  background: #ECE9E9 -moz-linear-gradient(top, #fff, #ECE9E9);\n"
+        },
+        "rasp": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 3.5161,
+          "body": "{\"count\":3,\"query\":\"SELECT name FROM products WHERE name LIKE '%' OR/**/1=1--%'\",\"results\":[\"apple juice\",\"banana juice\",\"coffee\"]}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=%27+OR%2F%2A%2A%2F1%3D1--",
+        "body": "",
+        "params": {
+          "q": "' OR/**/1=1--"
+        }
+      }
+    },
+    {
+      "id": "xss_basic",
+      "technique": "XSS reflejado básico",
+      "note": "",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 25.6222,
+          "body": "{\"status\":\"success\",\"data\":[]}"
+        },
+        "rasp": {
+          "status": "Sí",
+          "http_code": 403,
+          "response_time_ms": 2.5442,
+          "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"xss\",\"matched_rule\":\"script_tag\"}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=%3Cscript%3Ealert%281%29%3C%2Fscript%3E",
+        "body": "",
+        "params": {
+          "q": "<script>alert(1)</script>"
+        }
+      }
+    },
+    {
+      "id": "xss_attribute",
+      "technique": "XSS por manejador de evento (<img onerror>)",
+      "note": "",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 16.6314,
+          "body": "{\"status\":\"success\",\"data\":[]}"
+        },
+        "rasp": {
+          "status": "Sí",
+          "http_code": 403,
+          "response_time_ms": 2.4177,
+          "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"xss\",\"matched_rule\":\"event_handler\"}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=%3Cimg+src%3Dx+onerror%3Dalert%281%29%3E",
+        "body": "",
+        "params": {
+          "q": "<img src=x onerror=alert(1)>"
+        }
+      }
+    },
+    {
+      "id": "xss_double_encoded",
+      "technique": "XSS doble URL-encoding (evasión Fase 2)",
+      "note": "Payload documentado en la Fase 2",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 15.8394,
+          "body": "{\"status\":\"success\",\"data\":[]}"
+        },
+        "rasp": {
+          "status": "Sí",
+          "http_code": 403,
+          "response_time_ms": 2.8818,
+          "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"xss\",\"matched_rule\":\"script_tag\"}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=%253Cscript%253Ealert%25281%2529%253C%252Fscript%253E",
+        "body": "",
+        "params": {
+          "q": "%3Cscript%3Ealert%281%29%3C%2Fscript%3E"
+        }
+      }
+    },
+    {
+      "id": "path_traversal",
+      "technique": "Path traversal ../../etc/passwd",
+      "note": "",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 17.2963,
+          "body": "{\"status\":\"success\",\"data\":[]}"
+        },
+        "rasp": {
+          "status": "Sí",
+          "http_code": 403,
+          "response_time_ms": 3.0095,
+          "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"path_traversal\",\"matched_rule\":\"path_traversal\"}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=..%2F..%2Fetc%2Fpasswd",
+        "body": "",
+        "params": {
+          "q": "../../etc/passwd"
+        }
+      }
+    },
+    {
+      "id": "benign_search",
+      "technique": "Búsqueda legítima (control)",
+      "note": "",
+      "is_malicious": false,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 16.241,
+          "body": "{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Apple Juice (1000ml)\",\"description\":\"The all-time classic.\",\"price\":1.99,\"deluxePrice\":0.99,\"image\":\"apple_juice.jpg\",\"createdAt\":\"2026-09-17 02:24:45.663 +00:00\",\"updatedAt\":\"2026-09-17 02:24:45.663 +00:00\",\"deletedAt\":null},{\"id\":24,\"name\":\"Apple Pomace\",\"description\":\"Finest pressings of apples. Allergy disclaimer: Might contain traces of worms. Can b"
+        },
+        "rasp": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 2.1726,
+          "body": "{\"count\":1,\"query\":\"SELECT name FROM products WHERE name LIKE '%apple%'\",\"results\":[\"apple juice\"]}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/products/search?q=apple",
+        "body": "",
+        "params": {
+          "q": "apple"
+        }
+      }
+    },
+    {
+      "id": "benign_login",
+      "technique": "Login válido (control)",
+      "note": "",
+      "is_malicious": false,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 401,
+          "response_time_ms": 28.9129,
+          "body": "Invalid email or password."
+        },
+        "rasp": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 2.8127,
+          "body": "{\"authentication\":{\"role\":\"customer\",\"token\":\"lab-token-test@test.com\",\"umail\":\"test@test.com\"}}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/rest/user/login",
+        "body": "{\"email\":\"test@test.com\",\"password\":\"test123\"}",
+        "params": null
+      }
+    },
+    {
+      "id": "benign_catalog",
+      "technique": "Catálogo de productos (control)",
+      "note": "",
+      "is_malicious": false,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 28.7903,
+          "body": "{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Apple Juice (1000ml)\",\"description\":\"The all-time classic.\",\"price\":1.99,\"deluxePrice\":0.99,\"image\":\"apple_juice.jpg\",\"createdAt\":\"2026-09-17T02:24:45.663Z\",\"updatedAt\":\"2026-09-17T02:24:45.663Z\",\"deletedAt\":null},{\"id\":2,\"name\":\"Orange Juice (1000ml)\",\"description\":\"Made from oranges hand-picked by Uncle Dittmeyer.\",\"price\":2.99,\"deluxePrice\":2.49,\"imag"
+        },
+        "rasp": {
+          "status": "No",
+          "http_code": 200,
+          "response_time_ms": 1.7105,
+          "body": "{\"count\":2,\"query\":\"SELECT name FROM products WHERE name LIKE '%juice%'\",\"results\":[\"apple juice\",\"banana juice\"]}\n"
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "ModuleNotFoundError: No module named 'joblib'"
+        }
+      },
+      "request": {
+        "url": "http://localhost:4000/api/Products",
+        "body": "",
+        "params": null
+      }
+    },
+    {
+      "id": "bot_burst",
+      "technique": "Ráfaga de 20 peticiones (bot)",
+      "note": "req_per_minute no es una feature del modelo actual",
+      "is_malicious": true,
+      "layers": {
+        "rules": {
+          "status": "No",
+          "blocked_requests": 0,
+          "total": 20
+        },
+        "ml": {
+          "status": "N/A",
+          "detail": "el modelo no incorpora frecuencia por IP (req_per_minute)"
+        },
+        "rasp": {
+          "status": "N/A",
+          "detail": "el RASP protege operaciones, no volumen de tráfico"
+        }
+      }
+    }
+  ]
+}

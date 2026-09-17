@@ -1,0 +1,8 @@
+{
+  "deployed_at": "2026-09-17T01:56:11.297594+00:00",
+  "rules_file": "/home/alejandropenagos/Escritorio/Alejandro/Mecanismos/WAPP-ML-DevSecOps/waap/rules/waap_rules.yaml",
+  "version": "1.0.0",
+  "waf_rule_engine": "On",
+  "sha256": "9c862afae302e39cd2e3e1bef18a177887340b289d4a12734b019e082cf9445a",
+  "status": "deployed"
+}

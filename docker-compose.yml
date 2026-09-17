@@ -1,9 +1,22 @@
-# docker-compose.yml
+# Laboratorio WAAP: OWASP Juice Shop + proxy ModSecurity/CRS.
+# El modo del motor se controla con MODSEC_RULE_ENGINE (ver .env.example).
 services:
   juice-shop:
     image: bkimminich/juice-shop
     ports:
       - "3000:3000"
+    networks:
+      - lab-net
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('http').get('http://localhost:3000',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))"
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
 
   waap-proxy:
     image: owasp/modsecurity-crs:nginx-alpine
@@ -11,9 +24,21 @@ services:
       - "4000:8080"
     environment:
       - BACKEND=http://juice-shop:3000
-      - MODSEC_RULE_ENGINE=DetectionOnly
-      - PARANOIA=1
-      - ANOMALY_INBOUND=5
-      - ANOMALY_OUTBOUND=4
+      - MODSEC_RULE_ENGINE=${MODSEC_RULE_ENGINE:-On}
+      - PARANOIA=${PARANOIA:-1}
+      - ANOMALY_INBOUND=${ANOMALY_INBOUND:-5}
+      - ANOMALY_OUTBOUND=${ANOMALY_OUTBOUND:-4}
     depends_on:
       - juice-shop
+    networks:
+      - lab-net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:8080/ || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+networks:
+  lab-net:
+    driver: bridge

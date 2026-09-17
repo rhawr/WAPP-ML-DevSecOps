@@ -1,0 +1,14 @@
+Payload / tecnica,Bloqueado por reglas (Fase 2),Detectado por IA/ML (Fase 3),Bloqueado por RASP (Fase 4),Notas
+SQLi clásico ' OR '1'='1,No,N/A,Sí,
+SQLi con codificación URL,No,N/A,Sí,
+SQLi doble URL-encoding (evasión Fase 2),No,N/A,Sí,Técnica que evadió CRS en PL1
+SQLi fragmentado en 2 parámetros,No,N/A,Sí,Cada parámetro es benigno por separado
+SQLi con comentarios en línea,No,N/A,No,Intento de romper firmas basadas en cadenas exactas
+XSS reflejado básico,No,N/A,Sí,
+XSS por manejador de evento (<img onerror>),No,N/A,Sí,
+XSS doble URL-encoding (evasión Fase 2),No,N/A,Sí,Payload documentado en la Fase 2
+Path traversal ../../etc/passwd,No,N/A,Sí,
+Búsqueda legítima (control),No,N/A,No,
+Login válido (control),No,N/A,No,
+Catálogo de productos (control),No,N/A,No,
+Ráfaga de 20 peticiones (bot),No,N/A,N/A,req_per_minute no es una feature del modelo actual

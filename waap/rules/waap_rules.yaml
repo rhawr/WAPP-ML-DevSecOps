@@ -1,0 +1,41 @@
+# Policy as code del WAAP — versionada en Git y desplegada por el pipeline.
+# El despliegue está condicionado a que todas las puertas de seguridad pasen.
+version: "1.0.0"
+updated_at: "2026-09-17"
+
+waf:
+  engine: modsecurity
+  rule_engine: "On"          # DetectionOnly -> On (Fase 2)
+  crs_version: "3.3.10"
+  paranoia_level: 1
+  anomaly_inbound: 5
+  anomaly_outbound: 4
+
+ml:
+  model: traffic_agent/model.pkl
+  algorithm: isolation_forest
+  contamination: 0.10
+  anomaly_threshold: -0.05   # decision_function < umbral => anómalo
+  features:
+    - status_code
+    - response_time_ms
+    - url_length
+    - body_length
+    - entropy
+    - n_params
+    - has_suspicious_chars
+    - param_max_length
+    - special_char_ratio
+
+rasp:
+  enabled: true
+  guards:
+    - sql_injection
+    - xss
+    - path_traversal
+    - deserialization
+  action: block            # block | alert
+
+observability:
+  event_file: logs/waap_events.jsonl
+  format: jsonl

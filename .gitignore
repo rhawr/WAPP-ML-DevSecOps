@@ -4,6 +4,10 @@ CLAUDE.md
 
 # Entornos virtuales Python
 traffic_agent/envTrafficAgent/
+.venv/
+.venv-tools/
+envRasp/
+envPipeline/
 **/env/
 **/.venv/
 **/venv/
@@ -33,3 +37,12 @@ secrets.*
 
 # Logs de sistema (no los del proyecto)
 *.log
+
+# Artefactos de escaneo generados por el pipeline
+logs/sqlmap/
+logs/zap_report.html
+logs/*.html
+
+# Evidencias consolidadas (regenerables con: make collect)
+logs/entrega/
+logs/entrega*.zip

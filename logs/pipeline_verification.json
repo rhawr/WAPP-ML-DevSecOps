@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-09-17T02:22:26.122057+00:00",
+  "mode": "sca",
+  "expected_failing_stage": "sca-pip-audit",
+  "checks": {
+    "baseline_green": false,
+    "injected_red": true,
+    "failed_at_expected_stage": true,
+    "revert_green": false
+  },
+  "success": false,
+  "runs": [
+    {
+      "label": "baseline",
+      "exit_code": 1,
+      "gate_passed": false,
+      "failed_stages": [
+        "iac-checkov"
+      ],
+      "stage_status": {
+        "sast-semgrep": "passed",
+        "sca-pip-audit": "passed",
+        "build-image": "skipped",
+        "container-trivy": "skipped",
+        "iac-checkov": "failed",
+        "dast-zap": "skipped"
+      }
+    },
+    {
+      "label": "con-vulnerabilidad-sca",
+      "exit_code": 1,
+      "gate_passed": false,
+      "failed_stages": [
+        "sca-pip-audit",
+        "iac-checkov"
+      ],
+      "stage_status": {
+        "sast-semgrep": "passed",
+        "sca-pip-audit": "failed",
+        "build-image": "skipped",
+        "container-trivy": "skipped",
+        "iac-checkov": "failed",
+        "dast-zap": "skipped"
+      }
+    },
+    {
+      "label": "revertido",
+      "exit_code": 1,
+      "gate_passed": false,
+      "failed_stages": [
+        "iac-checkov"
+      ],
+      "stage_status": {
+        "sast-semgrep": "passed",
+        "sca-pip-audit": "passed",
+        "build-image": "skipped",
+        "container-trivy": "skipped",
+        "iac-checkov": "failed",
+        "dast-zap": "skipped"
+      }
+    }
+  ]
+}

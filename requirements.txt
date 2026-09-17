@@ -1,0 +1,15 @@
+# Dependencias unificadas del laboratorio (Fases 3, 4, 6 y 7)
+# Runtime de la app instrumentada con RASP (Fase 4)
+Flask>=3.0.0
+requests>=2.31.0
+urllib3>=2.0.0
+# Módulo IA/ML (Fase 3)
+scikit-learn>=1.3.0
+joblib>=1.3.0
+numpy>=1.24.0
+pandas>=2.0.0
+# Generación de tráfico (Fase 3)
+tqdm>=4.66.0
+colorama>=0.4.6
+# Policy as code / validación YAML (Fase 5)
+PyYAML>=6.0
