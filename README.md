@@ -23,7 +23,7 @@ Prototipo funcional de plataforma **WAAP (Web Application and API Protection)** 
 |---|---|---|
 | Motor de reglas (WAF) | ModSecurity + OWASP CRS 3.3.10 | [+] Fase 2 completa |
 | Detección por IA/ML | Isolation Forest (scikit-learn) | [+] Fase 3 completa |
-| Protección en ejecución (RASP) | Middleware Python (Flask/WSGI) | [~] Fase 4 pendiente |
+| Protección en ejecución (RASP) | Middleware Python (Flask/WSGI) | [+] Fase 4 completa |
 | Pipeline DevSecOps | GitHub Actions (Semgrep, pip-audit, Trivy, Checkov, ZAP) | [~] Fase 5 pendiente |
 
 La aplicación objetivo es **OWASP Juice Shop**, desplegada en un entorno de laboratorio local completamente aislado. Todos los ataques se ejecutan únicamente contra esta instancia controlada.
@@ -120,8 +120,14 @@ Flujo de una petición:
 │       ├── features_normal_traffic.csv
 │       ├── evaluation_predictions.csv
 │       └── evaluation_metrics.json
-├── app/                            # Agente RASP (Fase 4 — pendiente)
-│   └── rasp_agent.py
+├── observability/                  # Logging JSON unificado (base de Fase 7)
+│   └── logger.py
+├── app/                            # App instrumentada con RASP (Fase 4)
+│   ├── vulnerable_app.py           # App Flask con operaciones sensibles
+│   ├── rasp_agent.py               # Decoradores/guardas RASP
+│   ├── run_rasp_tests.py           # Casos de prueba + latencia
+│   ├── Dockerfile
+│   └── requirements.txt
 ├── pipeline/                       # Pipeline DevSecOps (Fase 5 — pendiente)
 │   └── .github/workflows/devsecops.yml
 └── README.md
@@ -181,6 +187,46 @@ python train_model.py
 python evaluate_model.py
 ```
 
+### 4. Ejecutar la Fase 4 (RASP)
+
+La Fase 4 no requiere Docker ni el laboratorio de Juice Shop: la app vulnerable y el agente RASP
+corren como un proceso Flask local.
+
+```bash
+# Opción A: entorno dedicado (recomendado)
+python3 -m venv envRasp
+source envRasp/bin/activate
+pip install -r app/requirements.txt
+
+# Opción B: instalar sobre el entorno actual
+pip install -r app/requirements.txt
+
+# Ejecutar los casos de prueba y la medición de latencia
+python app/run_rasp_tests.py
+```
+
+Genera:
+
+| Archivo | Contenido |
+|---|---|
+| `logs/rasp_test_results.json` | Casos (SQLi fragmentado, XSS doble-encode, path traversal, deserialización) + latencia |
+| `logs/rasp_latency.csv` | Muestras individuales de latencia RASP on/off |
+| `logs/waap_events.jsonl` | Flujo estructurado de eventos, con `verdict: block` y `guard_ms` |
+
+Para levantar la app manualmente y atacarla con `curl`:
+
+```bash
+python app/vulnerable_app.py            # http://127.0.0.1:5000 con RASP activo
+PORT=5050 RASP_ENABLED=false python app/vulnerable_app.py   # sin RASP
+```
+
+Ejemplo de bloqueo en tiempo de ejecución:
+
+```bash
+# RASP activo → 403
+curl -i "http://127.0.0.1:5000/api/Products/search?q=%27%20OR%201&extra=%3D1--"
+```
+
 ---
 
 ## Progreso por fases
@@ -232,8 +278,25 @@ Cinco vulnerabilidades identificadas y explotadas contra `localhost:3000`:
 - Métricas: [`traffic_agent/logs/evaluation_metrics.json`](traffic_agent/logs/evaluation_metrics.json)
 - Documentación: [`docs/fase-3-ia-ml.md`](docs/fase-3-ia-ml.md)
 
-### [~] Fase 4 — Agente RASP
-Middleware Python que intercepta la construcción de consultas SQL en tiempo de ejecución, capaz de bloquear payloads que evadieron el WAF y el modelo ML.
+### [+] Fase 4 — Agente RASP
+
+Agente en proceso (`app/rasp_agent.py`) con decoradores que inspeccionan el **valor final** antes de
+ejecutarlo: consulta SQL concatenada, valor reflejado en HTML, ruta de archivo y blob serializado.
+Bloquea con `HTTP 403` y registra cada decisión en JSON estructurado.
+
+| Caso | RASP off | RASP on |
+|---|---|---|
+| SQLi fragmentado (`q=' OR 1` + `extra='=1--'`) | 200 — ejecuta `... OR 1=1--` | **403** |
+| XSS doble-encode (evasión Fase 2) | 200 — `<script>alert(1)</script>` | **403** |
+| Path traversal (`../outside_secret.txt`) | 200 — lee archivo externo | **403** |
+| Deserialización (`__reduce__: os.system`) | 200 | **403** |
+
+**Latencia** (150 muestras/escenario): RASP on 2.285 ms vs off 1.990 ms → **+0.294 ms (+14.8 %)**;
+inspección interna del guard: **0.035 ms** de media. Tráfico legítimo sin falsos positivos.
+
+- Artefactos: [`logs/rasp_test_results.json`](logs/rasp_test_results.json),
+  [`logs/rasp_latency.csv`](logs/rasp_latency.csv), [`logs/waap_events.jsonl`](logs/waap_events.jsonl)
+- Documentación: [`docs/fase-4-rasp.md`](docs/fase-4-rasp.md)
 
 ### [~] Fase 5 — Pipeline DevSecOps
 GitHub Actions con: SAST (Semgrep), SCA (pip-audit), Container scan (Trivy), IaC scan (Checkov), DAST (OWASP ZAP).

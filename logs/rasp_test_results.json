@@ -1,0 +1,91 @@
+{
+  "generated_at": "2026-09-17T01:43:06.611228+00:00",
+  "rounds_per_scenario": 50,
+  "cycles": 3,
+  "warmup_requests": 10,
+  "cases": {
+    "rasp_on_fragmented": {
+      "fragment_a_status": 400,
+      "fragment_b_status": 200,
+      "combined_status": 403,
+      "fragment_a_blocked": false,
+      "fragment_b_blocked": false,
+      "combined_blocked": true,
+      "combined_body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"sql_injection\",\"matched_rule\":\"numeric_tautology\"}\n"
+    },
+    "rasp_on_double_encoded_xss": {
+      "status": 403,
+      "blocked": true,
+      "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"xss\",\"matched_rule\":\"script_tag\"}\n"
+    },
+    "rasp_on_path_traversal": {
+      "status": 403,
+      "blocked": true,
+      "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"path_traversal\",\"matched_rule\":\"path_traversal\"}\n"
+    },
+    "rasp_on_deserialization": {
+      "status": 403,
+      "blocked": true,
+      "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"deserialization\",\"matched_rule\":\"python_pickle_opcode\"}\n"
+    },
+    "rasp_on_valid_login": {
+      "status": 200,
+      "blocked": false
+    },
+    "rasp_off_fragmented": {
+      "fragment_a_status": 400,
+      "fragment_b_status": 200,
+      "combined_status": 200,
+      "fragment_a_blocked": false,
+      "fragment_b_blocked": false,
+      "combined_blocked": false,
+      "combined_body": "{\"count\":3,\"query\":\"SELECT name FROM products WHERE name LIKE '%' OR 1=1--%'\",\"results\":[\"apple juice\",\"banana juice\",\"coffee\"]}\n"
+    },
+    "rasp_off_double_encoded_xss": {
+      "status": 200,
+      "blocked": false,
+      "body": "<h1>Resultados para: <script>alert(1)</script></h1>"
+    },
+    "rasp_off_path_traversal": {
+      "status": 200,
+      "blocked": false,
+      "body": "{\"content\":\"CONTENIDO_QUE_NO_DEBERIA_SER_ACCESIBLE_DESDE_DOCUMENTS\\n\"}\n"
+    },
+    "rasp_off_deserialization": {
+      "status": 200,
+      "blocked": false,
+      "body": "{\"object\":{\"__reduce__\":\"os.system\",\"cmd\":\"whoami\"}}\n"
+    },
+    "rasp_off_valid_login": {
+      "status": 200,
+      "blocked": false
+    }
+  },
+  "latency": {
+    "rasp_on": {
+      "count": 150,
+      "mean_ms": 2.046,
+      "median_ms": 1.9446,
+      "p95_ms": 3.0177,
+      "min_ms": 1.1685,
+      "max_ms": 3.9323
+    },
+    "rasp_off": {
+      "count": 150,
+      "mean_ms": 2.157,
+      "median_ms": 2.0175,
+      "p95_ms": 3.257,
+      "min_ms": 1.2455,
+      "max_ms": 4.0212
+    },
+    "overhead_ms": -0.111,
+    "overhead_pct": -5.15
+  },
+  "guard_time_ms": {
+    "samples": 106,
+    "mean_ms": 0.0335,
+    "median_ms": 0.0282,
+    "p95_ms": 0.063,
+    "max_ms": 0.1066
+  }
+}
