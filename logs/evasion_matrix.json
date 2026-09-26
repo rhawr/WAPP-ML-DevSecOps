@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-26T07:07:45.543886+00:00",
+  "generated_at": "2026-09-26T07:46:54.178516+00:00",
   "proxy_url": "http://localhost:4000",
   "proxy_online": true,
-  "rasp_url": "http://127.0.0.1:42653",
+  "rasp_url": "http://127.0.0.1:45635",
   "ml_model_loaded": true,
   "ml_error": null,
   "sqlmap": null,
@@ -16,18 +16,18 @@
         "rules": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 14.533,
+          "response_time_ms": 16.0752,
           "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
         },
         "rasp": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 10.4014,
+          "response_time_ms": 7.9036,
           "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"sql_injection\",\"matched_rule\":\"string_tautology\"}\n"
         },
         "ml": {
           "status": "Sí",
-          "anomaly_score": 0.079848,
+          "anomaly_score": 0.076326,
           "prediction": -1
         }
       },
@@ -48,18 +48,18 @@
         "rules": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 4.3304,
+          "response_time_ms": 6.4143,
           "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
         },
         "rasp": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 2.795,
+          "response_time_ms": 2.8592,
           "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"sql_injection\",\"matched_rule\":\"string_tautology\"}\n"
         },
         "ml": {
           "status": "Sí",
-          "anomaly_score": 0.094632,
+          "anomaly_score": 0.092609,
           "prediction": -1
         }
       },
@@ -73,25 +73,25 @@
     },
     {
       "id": "sqli_double_encoded",
-      "technique": "SQLi doble URL-encoding (evasión Fase 2)",
-      "note": "Técnica que evadió CRS en PL1",
+      "technique": "SQLi con codificación URL anidada (evasión Fase 2)",
+      "note": "Codificación anidada que supera las dos capas que normaliza el WAF",
       "is_malicious": true,
       "layers": {
         "rules": {
           "status": "No",
           "http_code": 200,
-          "response_time_ms": 12.3132,
+          "response_time_ms": 14.2502,
           "body": "{\"status\":\"success\",\"data\":[]}"
         },
         "rasp": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 2.9869,
+          "response_time_ms": 3.0065,
           "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"sql_injection\",\"matched_rule\":\"string_tautology\"}\n"
         },
         "ml": {
           "status": "Sí",
-          "anomaly_score": 0.094695,
+          "anomaly_score": 0.090658,
           "prediction": -1
         }
       },
@@ -112,13 +112,13 @@
         "rules": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 4.684,
+          "response_time_ms": 4.232,
           "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
         },
         "rasp": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 2.6963,
+          "response_time_ms": 2.0646,
           "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"sql_injection\",\"matched_rule\":\"numeric_tautology\"}\n"
         },
         "ml": {
@@ -145,13 +145,13 @@
         "rules": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 4.6006,
+          "response_time_ms": 5.312,
           "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
         },
         "rasp": {
           "status": "No",
           "http_code": 200,
-          "response_time_ms": 2.9756,
+          "response_time_ms": 2.1162,
           "body": "{\"count\":3,\"query\":\"SELECT name FROM products WHERE name LIKE '%' OR/**/1=1--%'\",\"results\":[\"apple juice\",\"banana juice\",\"coffee\"]}\n"
         },
         "ml": {
@@ -177,13 +177,13 @@
         "rules": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 4.8538,
+          "response_time_ms": 4.9141,
           "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
         },
         "rasp": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 3.7307,
+          "response_time_ms": 3.4038,
           "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"xss\",\"matched_rule\":\"script_tag\"}\n"
         },
         "ml": {
@@ -209,13 +209,13 @@
         "rules": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 3.9816,
+          "response_time_ms": 4.23,
           "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
         },
         "rasp": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 2.0316,
+          "response_time_ms": 2.0168,
           "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"xss\",\"matched_rule\":\"event_handler\"}\n"
         },
         "ml": {
@@ -241,13 +241,13 @@
         "rules": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 3.9426,
+          "response_time_ms": 3.6869,
           "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
         },
         "rasp": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 2.3177,
+          "response_time_ms": 2.0369,
           "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"xss\",\"matched_rule\":\"script_tag\"}\n"
         },
         "ml": {
@@ -273,13 +273,13 @@
         "rules": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 4.5699,
+          "response_time_ms": 4.1695,
           "body": "<html>\r\n<head><title>403 Forbidden</title></head>\r\n<body>\r\n<center><h1>403 Forbidden</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
         },
         "rasp": {
           "status": "Sí",
           "http_code": 403,
-          "response_time_ms": 3.0535,
+          "response_time_ms": 1.959,
           "body": "{\"error\":\"Operaci\\u00f3n bloqueada por RASP\",\"event\":\"path_traversal\",\"matched_rule\":\"path_traversal\"}\n"
         },
         "ml": {
@@ -305,18 +305,18 @@
         "rules": {
           "status": "No",
           "http_code": 200,
-          "response_time_ms": 12.3371,
-          "body": "{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Apple Juice (1000ml)\",\"description\":\"The all-time classic.\",\"price\":1.99,\"deluxePrice\":0.99,\"image\":\"apple_juice.jpg\",\"createdAt\":\"2026-09-26 05:55:21.693 +00:00\",\"updatedAt\":\"2026-09-26 05:55:21.693 +00:00\",\"deletedAt\":null},{\"id\":24,\"name\":\"Apple Pomace\",\"description\":\"Finest pressings of apples. Allergy disclaimer: Might contain traces of worms. Can b"
+          "response_time_ms": 11.6548,
+          "body": "{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Apple Juice (1000ml)\",\"description\":\"The all-time classic.\",\"price\":1.99,\"deluxePrice\":0.99,\"image\":\"apple_juice.jpg\",\"createdAt\":\"2026-09-26 07:43:07.804 +00:00\",\"updatedAt\":\"2026-09-26 07:43:07.804 +00:00\",\"deletedAt\":null},{\"id\":24,\"name\":\"Apple Pomace\",\"description\":\"Finest pressings of apples. Allergy disclaimer: Might contain traces of worms. Can b"
         },
         "rasp": {
           "status": "No",
           "http_code": 200,
-          "response_time_ms": 2.3811,
+          "response_time_ms": 2.9169,
           "body": "{\"count\":1,\"query\":\"SELECT name FROM products WHERE name LIKE '%apple%'\",\"results\":[\"apple juice\"]}\n"
         },
         "ml": {
           "status": "No",
-          "anomaly_score": -0.010957,
+          "anomaly_score": -0.009263,
           "prediction": 1
         }
       },
@@ -337,18 +337,18 @@
         "rules": {
           "status": "No",
           "http_code": 401,
-          "response_time_ms": 13.3414,
+          "response_time_ms": 18.9644,
           "body": "Invalid email or password."
         },
         "rasp": {
           "status": "No",
           "http_code": 200,
-          "response_time_ms": 3.2096,
+          "response_time_ms": 2.5285,
           "body": "{\"authentication\":{\"role\":\"customer\",\"token\":\"lab-token-test@test.com\",\"umail\":\"test@test.com\"}}\n"
         },
         "ml": {
           "status": "Sí",
-          "anomaly_score": 0.059512,
+          "anomaly_score": 0.012455,
           "prediction": -1
         }
       },
@@ -367,18 +367,18 @@
         "rules": {
           "status": "No",
           "http_code": 200,
-          "response_time_ms": 28.6635,
-          "body": "{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Apple Juice (1000ml)\",\"description\":\"The all-time classic.\",\"price\":1.99,\"deluxePrice\":0.99,\"image\":\"apple_juice.jpg\",\"createdAt\":\"2026-09-26T05:55:21.693Z\",\"updatedAt\":\"2026-09-26T05:55:21.693Z\",\"deletedAt\":null},{\"id\":2,\"name\":\"Orange Juice (1000ml)\",\"description\":\"Made from oranges hand-picked by Uncle Dittmeyer.\",\"price\":2.99,\"deluxePrice\":2.49,\"imag"
+          "response_time_ms": 30.2425,
+          "body": "{\"status\":\"success\",\"data\":[{\"id\":1,\"name\":\"Apple Juice (1000ml)\",\"description\":\"The all-time classic.\",\"price\":1.99,\"deluxePrice\":0.99,\"image\":\"apple_juice.jpg\",\"createdAt\":\"2026-09-26T07:43:07.804Z\",\"updatedAt\":\"2026-09-26T07:43:07.804Z\",\"deletedAt\":null},{\"id\":2,\"name\":\"Orange Juice (1000ml)\",\"description\":\"Made from oranges hand-picked by Uncle Dittmeyer.\",\"price\":2.99,\"deluxePrice\":2.49,\"imag"
         },
         "rasp": {
           "status": "No",
           "http_code": 200,
-          "response_time_ms": 2.5228,
+          "response_time_ms": 2.2716,
           "body": "{\"count\":2,\"query\":\"SELECT name FROM products WHERE name LIKE '%juice%'\",\"results\":[\"apple juice\",\"banana juice\"]}\n"
         },
         "ml": {
           "status": "No",
-          "anomaly_score": -0.088119,
+          "anomaly_score": -0.0886,
           "prediction": 1
         }
       },

@@ -1,7 +1,7 @@
 Payload / tecnica,Bloqueado por reglas (Fase 2),Detectado por IA/ML (Fase 3),Bloqueado por RASP (Fase 4),Notas
 SQLi clásico ' OR '1'='1,Sí,Sí,Sí,
 SQLi con codificación URL,Sí,Sí,Sí,
-SQLi doble URL-encoding (evasión Fase 2),No,Sí,Sí,Técnica que evadió CRS en PL1
+SQLi con codificación URL anidada (evasión Fase 2),No,Sí,Sí,Codificación anidada que supera las dos capas que normaliza el WAF
 SQLi fragmentado en 2 parámetros,Sí,Sí,Sí,Cada parámetro es benigno por separado
 SQLi con comentarios en línea,Sí,Sí,No,Intento de romper firmas basadas en cadenas exactas
 XSS reflejado básico,Sí,Sí,Sí,

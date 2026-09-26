@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-09-26T07:09:03.637567+00:00",
+  "generated_at": "2026-09-26T07:46:55.713840+00:00",
   "sources": {
     "matrix": "/home/d3vjh/Documents/UD/Mecanismos/logs/evasion_matrix.json",
     "events": "/home/d3vjh/Documents/UD/Mecanismos/logs/waap_events.jsonl",
     "ml_metrics": "/home/d3vjh/Documents/UD/Mecanismos/traffic_agent/logs/evaluation_metrics.json"
   },
   "ingest_delay_ms": 0.0,
-  "ml_inference_ms": 9.1987,
+  "ml_inference_ms": 10.0305,
   "ml_inference_error": null,
   "layers": {
     "rules": {
@@ -53,35 +53,35 @@
   },
   "mttd": {
     "rules": {
-      "mttd_ms": 5.687,
+      "mttd_ms": 6.1292,
       "samples": 8,
       "basis": "latencia de la respuesta 403 del proxy"
     },
     "ml": {
-      "mttd_ms": 9.1987,
+      "mttd_ms": 10.0305,
       "samples": 13,
       "basis": "latencia de inferencia del modelo"
     },
     "rasp": {
-      "mttd_ms": 0.0317,
-      "samples": 45,
+      "mttd_ms": 0.0193,
+      "samples": 32,
       "basis": "guard_ms (detección in-process)"
     }
   },
   "rasp_events": {
     "block_events": 12,
-    "allow_events": 33,
+    "allow_events": 20,
     "blocks_by_type": {
       "sql_injection": 5,
       "xss": 4,
       "path_traversal": 2,
       "deserialization": 1
     },
-    "guard_ms_mean": 0.0317,
-    "guard_ms_p95": 0.0581
+    "guard_ms_mean": 0.0193,
+    "guard_ms_p95": 0.0309
   },
   "ml_evaluation": {
-    "evaluated_at": "2026-09-26T06:50:46.303220+00:00",
+    "evaluated_at": "2026-09-26T07:43:36.265838+00:00",
     "rows_evaluated": 500,
     "confusion_matrix": {
       "TN": 180,

@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-26T06:53:24.286439+00:00",
+  "generated_at": "2026-09-26T07:43:36.688756+00:00",
   "rounds_per_scenario": 20,
-  "cycles": 2,
+  "cycles": 1,
   "warmup_requests": 10,
   "cases": {
     "rasp_on_fragmented": {
@@ -63,29 +63,29 @@
   },
   "latency": {
     "rasp_on": {
-      "count": 40,
-      "mean_ms": 2.0858,
-      "median_ms": 2.0013,
-      "p95_ms": 3.0025,
-      "min_ms": 1.2276,
-      "max_ms": 5.1453
+      "count": 20,
+      "mean_ms": 1.8841,
+      "median_ms": 1.7542,
+      "p95_ms": 3.0271,
+      "min_ms": 1.1243,
+      "max_ms": 3.1661
     },
     "rasp_off": {
-      "count": 40,
-      "mean_ms": 1.9371,
-      "median_ms": 1.8741,
-      "p95_ms": 2.8707,
-      "min_ms": 1.2378,
-      "max_ms": 3.2582
+      "count": 20,
+      "mean_ms": 2.6873,
+      "median_ms": 2.2715,
+      "p95_ms": 4.5782,
+      "min_ms": 1.3424,
+      "max_ms": 7.4366
     },
-    "overhead_ms": 0.1487,
-    "overhead_pct": 7.68
+    "overhead_ms": -0.8032,
+    "overhead_pct": -29.89
   },
   "guard_time_ms": {
-    "samples": 33,
-    "mean_ms": 0.0355,
-    "median_ms": 0.0196,
-    "p95_ms": 0.0581,
-    "max_ms": 0.2733
+    "samples": 20,
+    "mean_ms": 0.0186,
+    "median_ms": 0.0162,
+    "p95_ms": 0.024,
+    "max_ms": 0.0591
   }
 }
