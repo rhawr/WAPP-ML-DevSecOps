@@ -179,7 +179,7 @@ def main() -> int:
         gate_passed = deploy_result["status"] == "passed"
 
     print("-" * 72)
-    print(f"RESULTADO: {'VERDE — despliegue habilitado' if gate_passed else 'ROJO — despliegue bloqueado'}")
+    print(f"RESULTADO: {'VERDE: despliegue habilitado' if gate_passed else 'ROJO: despliegue bloqueado'}")
     if failed:
         print("Etapas que bloquearon: " + ", ".join(str(result["name"]) for result in failed))
 
