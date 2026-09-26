@@ -1,62 +1,59 @@
 {
-  "generated_at": "2026-09-17T02:22:26.122057+00:00",
-  "mode": "sca",
-  "expected_failing_stage": "sca-pip-audit",
+  "generated_at": "2026-09-26T07:04:44.322384+00:00",
+  "mode": "sast",
+  "expected_failing_stage": "sast-semgrep",
   "checks": {
-    "baseline_green": false,
+    "baseline_green": true,
     "injected_red": true,
     "failed_at_expected_stage": true,
-    "revert_green": false
+    "revert_green": true
   },
-  "success": false,
+  "success": true,
   "runs": [
     {
       "label": "baseline",
-      "exit_code": 1,
-      "gate_passed": false,
-      "failed_stages": [
-        "iac-checkov"
-      ],
+      "exit_code": 0,
+      "gate_passed": true,
+      "failed_stages": [],
       "stage_status": {
         "sast-semgrep": "passed",
         "sca-pip-audit": "passed",
         "build-image": "skipped",
         "container-trivy": "skipped",
-        "iac-checkov": "failed",
-        "dast-zap": "skipped"
+        "iac-checkov": "skipped",
+        "dast-zap": "skipped",
+        "deploy-waap-rules": "passed"
       }
     },
     {
-      "label": "con-vulnerabilidad-sca",
+      "label": "con-vulnerabilidad-sast",
       "exit_code": 1,
       "gate_passed": false,
       "failed_stages": [
-        "sca-pip-audit",
-        "iac-checkov"
+        "sast-semgrep"
       ],
       "stage_status": {
-        "sast-semgrep": "passed",
-        "sca-pip-audit": "failed",
+        "sast-semgrep": "failed",
+        "sca-pip-audit": "passed",
         "build-image": "skipped",
         "container-trivy": "skipped",
-        "iac-checkov": "failed",
+        "iac-checkov": "skipped",
         "dast-zap": "skipped"
       }
     },
     {
       "label": "revertido",
-      "exit_code": 1,
-      "gate_passed": false,
-      "failed_stages": [
-        "iac-checkov"
-      ],
+      "exit_code": 0,
+      "gate_passed": true,
+      "failed_stages": [],
       "stage_status": {
         "sast-semgrep": "passed",
         "sca-pip-audit": "passed",
         "build-image": "skipped",
         "container-trivy": "skipped",
-        "iac-checkov": "failed",
-        "dast-zap": "skipped"
+        "iac-checkov": "skipped",
+        "dast-zap": "skipped",
+        "deploy-waap-rules": "passed"
       }
     }
   ]

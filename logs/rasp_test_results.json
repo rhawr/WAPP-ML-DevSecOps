@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-09-17T02:50:05.095250+00:00",
-  "rounds_per_scenario": 50,
-  "cycles": 3,
+  "generated_at": "2026-09-26T06:53:24.286439+00:00",
+  "rounds_per_scenario": 20,
+  "cycles": 2,
   "warmup_requests": 10,
   "cases": {
     "rasp_on_fragmented": {
@@ -63,29 +63,29 @@
   },
   "latency": {
     "rasp_on": {
-      "count": 150,
-      "mean_ms": 2.2299,
-      "median_ms": 2.0746,
-      "p95_ms": 3.5112,
-      "min_ms": 1.1609,
-      "max_ms": 4.9562
+      "count": 40,
+      "mean_ms": 2.0858,
+      "median_ms": 2.0013,
+      "p95_ms": 3.0025,
+      "min_ms": 1.2276,
+      "max_ms": 5.1453
     },
     "rasp_off": {
-      "count": 150,
-      "mean_ms": 2.3782,
-      "median_ms": 2.1893,
-      "p95_ms": 4.0642,
-      "min_ms": 1.2068,
-      "max_ms": 4.8728
+      "count": 40,
+      "mean_ms": 1.9371,
+      "median_ms": 1.8741,
+      "p95_ms": 2.8707,
+      "min_ms": 1.2378,
+      "max_ms": 3.2582
     },
-    "overhead_ms": -0.1483,
-    "overhead_pct": -6.24
+    "overhead_ms": 0.1487,
+    "overhead_pct": 7.68
   },
   "guard_time_ms": {
-    "samples": 106,
-    "mean_ms": 0.0295,
-    "median_ms": 0.0263,
-    "p95_ms": 0.0566,
-    "max_ms": 0.0659
+    "samples": 33,
+    "mean_ms": 0.0355,
+    "median_ms": 0.0196,
+    "p95_ms": 0.0581,
+    "max_ms": 0.2733
   }
 }
