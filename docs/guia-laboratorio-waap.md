@@ -344,21 +344,31 @@ HTTP 403
 
 ### Paso 2.3. Caso de evasión exitosa
 
-Se envía el mismo ataque con doble codificación de URL. El WAF decodifica solo una capa,
-así que la firma no coincide y la petición pasa con código 200. Esta es la debilidad que
-resolverán las siguientes capas.
+El WAF normaliza el tráfico decodificando la URL antes de comparar las firmas, pero solo
+lo hace hasta dos capas de codificación. Para comprobarlo enviamos el mismo ataque con
+distintas profundidades de codificación y observamos a partir de cuál pasa el filtro.
 
 ```bash
-curl -s -o /dev/null -w "HTTP %{http_code}\n" \
-  "http://localhost:4000/rest/products/search?q=%2527%2520OR%2520%25271%2527%253D%25271"
+P="http://localhost:4000/rest/products/search"
+curl -s -o /dev/null -w "Simple:  HTTP %{http_code}\n" "$P?q=%27%20OR%20%271%27%3D%271"
+curl -s -o /dev/null -w "Doble:   HTTP %{http_code}\n" "$P?q=%2527%2520OR%2520%25271%2527%253D%25271"
+curl -s -o /dev/null -w "Triple:  HTTP %{http_code}\n" "$P?q=%252527%252520OR%252520%2525271%252527%25253D%2525271"
 ```
 
 Salida esperada:
 ```text
-HTTP 200
+Simple:  HTTP 403
+Doble:   HTTP 403
+Triple:  HTTP 200
 ```
 
-> Figura 14. Ataque con doble codificación que evade el WAF.
+Con codificación simple y doble el WAF alcanza a normalizar el payload y lo bloquea. Con
+una tercera capa de codificación la firma ya no coincide tras la normalización, la
+petición pasa con código 200 y llega al backend. Esa es la debilidad que resuelven el
+modelo de la Fase 3 y el agente RASP de la Fase 4.
+
+> Figura 14. El ataque con codificación anidada de tres capas evade el WAF (200), mientras
+> que las versiones simple y doble son bloqueadas (403).
 > Espacio para captura.
 
 ---
@@ -504,7 +514,7 @@ Salida esperada:
 Payload / técnica                            Reglas  IA/ML   RASP
 SQLi clásico ' OR '1'='1                     Sí      Sí      Sí
 SQLi con codificación URL                    Sí      Sí      Sí
-SQLi doble URL-encoding (evasión Fase 2)     No      Sí      Sí
+SQLi con codificación URL anidada (evasión Fase 2) No      Sí      Sí
 SQLi fragmentado en 2 parámetros             Sí      Sí      Sí
 SQLi con comentarios en línea                Sí      Sí      No
 XSS reflejado básico                         Sí      Sí      Sí
@@ -519,7 +529,7 @@ Ráfaga de 20 peticiones (bot)                No      N/A     N/A
 
 Puntos importantes para el análisis escrito de al menos media página:
 
-El ataque de inyección SQL con doble codificación evade el WAF, pero lo detienen tanto el
+El ataque de inyección SQL con codificación anidada de tres capas evade el WAF, pero lo detienen tanto el
 modelo como el RASP. Este es el caso que justifica las capas tres y cuatro. El ataque de
 inyección SQL con comentarios en línea pasa el RASP pero lo detiene el WAF. Ninguna capa
 es completa por sí sola, y en conjunto cubren casi todos los casos. El control de login
@@ -553,7 +563,7 @@ Salida esperada:
 ```
 
 Recomendaciones de ajuste. Subir el nivel de paranoia del CRS al nivel dos para cerrar el
-hueco de la doble codificación en la capa de reglas, aceptando que aumentarán los falsos
+hueco de la codificación anidada en la capa de reglas, aceptando que aumentarán los falsos
 positivos. Revisar el umbral de contaminación del modelo y agregar la frecuencia de
 peticiones por dirección IP como variable, de modo que cubra el caso de la ráfaga. Añadir
 al RASP una regla para los comentarios de inyección SQL en línea.
@@ -593,7 +603,7 @@ evidencias:
 |---|---|---|
 | 0 | Entorno | Contenedores y entorno de Python operativos |
 | 1 | Vulnerabilidades | Cinco fallas comprobadas contra la aplicación directa |
-| 2 | WAF | Bloqueo del ataque conocido y evasión por doble codificación |
+| 2 | WAF | Bloqueo del ataque conocido y evasión por codificación anidada |
 | 3 | Aprendizaje automático | Exactitud 88 por ciento, recall 86,7 por ciento, ROC-AUC 0,95 |
 | 4 | RASP | Bloqueo de los cuatro ataques, costo de inspección cercano a 0,02 ms |
 | 5 | Pipeline | Ejercicio de rojo y verde exitoso |

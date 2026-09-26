@@ -75,10 +75,10 @@ def catalog() -> list[Case]:
             rasp_params={"q": url_encoded},
         ),
         Case(
-            "sqli_double_encoded", "SQLi doble URL-encoding (evasión Fase 2)",
+            "sqli_double_encoded", "SQLi con codificación URL anidada (evasión Fase 2)",
             "GET", "/rest/products/search", {"q": double_encoded},
             rasp_params={"q": double_encoded},
-            note="Técnica que evadió CRS en PL1",
+            note="Codificación anidada que supera las dos capas que normaliza el WAF",
         ),
         Case(
             "sqli_fragmented", "SQLi fragmentado en 2 parámetros",
