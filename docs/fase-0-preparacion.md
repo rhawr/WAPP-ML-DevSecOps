@@ -1,4 +1,4 @@
-# Fase 0 — Preparación del entorno
+# Fase 0. Preparación del entorno
 
 ## Objetivo
 
@@ -18,8 +18,7 @@ taller-waap/
 ├── app/                   # Agente RASP (Fase 4)
 ├── waap/ml/               # Modelo ML (Fase 3)
 ├── pipeline/              # Pipeline DevSecOps (Fase 5)
-├── docker-compose.yml
-└── CLAUDE.md
+└── docker-compose.yml
 ```
 
 ### 2. Configuración de Docker Compose
@@ -49,7 +48,7 @@ services:
 
 **Decisiones de configuración:**
 - Puerto `4000` para el proxy (el `8080` está ocupado por Burp Suite).
-- `MODSEC_RULE_ENGINE=DetectionOnly` en la Fase 0–1: solo registra alertas, no bloquea tráfico.
+- `MODSEC_RULE_ENGINE=DetectionOnly` en las Fases 0 y 1: solo registra alertas, no bloquea tráfico.
 - `PARANOIA=1`: nivel más bajo de CRS, menor tasa de falsos positivos.
 - `ANOMALY_INBOUND=5` / `ANOMALY_OUTBOUND=4`: umbrales de puntuación para activar alertas.
 - No se declara red bridge explícita; Docker Compose crea la red `mecanismos_default` automáticamente.
